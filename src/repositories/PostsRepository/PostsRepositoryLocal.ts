@@ -4,7 +4,7 @@ import { Author, MostDiscussedPost, PostView } from "@/domain";
 import { v4 as uuid } from "uuid";
 
 const mockAuthor: Author = {
-  avatar: "http://random.cat/view/635",
+  avatar: "https://picsum.photos/70/70",
   fullname: "Random Cat"
 };
 const mockPostViews: PostView[] = [
@@ -13,6 +13,13 @@ const mockPostViews: PostView[] = [
     author: mockAuthor,
     image: null,
     content: "Random Cat make random post",
+    lastComments: []
+  },
+  {
+    id: uuid(),
+    author: mockAuthor,
+    image: "https://picsum.photos/200/300",
+    content: "Random Cat make another post",
     lastComments: []
   }
 ];

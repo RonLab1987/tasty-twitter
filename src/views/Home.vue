@@ -1,18 +1,25 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
-  </div>
+  <v-container>
+    <PostViewsList :post-views="postViews" />
+  </v-container>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import { PostViewsList } from "@/components/PostViewsList";
+
+import { postsRepository } from "@/app/container";
 
 export default Vue.extend({
   name: "Home",
+  subscriptions: () => {
+    return {
+      postViews: postsRepository.postViews$,
+      mostDiscussedPosts: postsRepository.mostDiscussedPosts$
+    };
+  },
   components: {
-    HelloWorld
+    PostViewsList
   }
 });
 </script>
