@@ -1,14 +1,14 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col :cols="7">
-        <PostViewsList :post-views="postViews" />
-      </v-col>
-      <v-col :cols="5">
-        <most-discussed-posts-list :list="mostDiscussedPostViews" />
-      </v-col>
-    </v-row>
-  </v-container>
+  <v-row>
+    <v-col :cols="8">
+      <create-post-form :on-submit="onSubmitHandler" />
+      <PostViewsList :post-views="postViews" />
+    </v-col>
+    <v-col :cols="4">
+      <h3 class="mb-4">Самые обсуждаемые посты</h3>
+      <most-discussed-posts-list :list="mostDiscussedPostViews" />
+    </v-col>
+  </v-row>
 </template>
 
 <script lang="ts">
@@ -19,23 +19,27 @@ import { IMostDiscussedPostFeedServiceToken } from "@/services/MostDiscussedPost
 
 import { PostViewsList } from "@/components/PostViewsList";
 import { MostDiscussedPostsList } from "@/components/MostDiscussedPostsList";
+import { CreatePostForm, NewPost } from "@/components/CreatePostForm";
 
 export default Vue.extend({
   name: "Home",
   subscriptions: () => {
-    const postFeedService = container.resolve(IPostFeedServiceToken);
-    const mostDiscussedPostFeedService = container.resolve(
-      IMostDiscussedPostFeedServiceToken
-    );
     return {
-      postViews: postFeedService.postViews$,
-      mostDiscussedPostViews:
-        mostDiscussedPostFeedService.mostDiscussedPostViews$
+      postViews: container.resolve(IPostFeedServiceToken).postViews$,
+      mostDiscussedPostViews: container.resolve(
+        IMostDiscussedPostFeedServiceToken
+      ).mostDiscussedPostViews$
     };
+  },
+  methods: {
+    onSubmitHandler(newPost: NewPost) {
+      return container.resolve(IPostFeedServiceToken).createPost(newPost);
+    }
   },
   components: {
     PostViewsList,
-    MostDiscussedPostsList
+    MostDiscussedPostsList,
+    CreatePostForm
   }
 });
 </script>

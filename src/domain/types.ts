@@ -1,3 +1,7 @@
+export interface IApplicationConfig {
+  darkTheme: boolean;
+}
+
 export interface IAuthor {
   avatar: string;
   fullname: string;

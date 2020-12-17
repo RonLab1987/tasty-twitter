@@ -12,10 +12,20 @@ import {
   MostDiscussedPostFeedService,
   IMostDiscussedPostFeedServiceToken
 } from "@/services/MostDiscussedPostFeedService";
+import {
+  ApplicationConfigRepositoryLocal,
+  IApplicationConfigRepositoryToken
+} from "@/repositories/ApplicationConfigRepository";
 
 container.register(IPostsRepositoryToken, {
   useFactory: instanceCachingFactory(() => {
     return new PostsRepositoryLocal(window.localStorage);
+  })
+});
+
+container.register(IApplicationConfigRepositoryToken, {
+  useFactory: instanceCachingFactory(() => {
+    return new ApplicationConfigRepositoryLocal(window.localStorage);
   })
 });
 

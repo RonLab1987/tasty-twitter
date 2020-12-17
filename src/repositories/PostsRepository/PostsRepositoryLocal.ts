@@ -35,7 +35,9 @@ export class PostsRepositoryLocal implements IPostsRepository {
   }
 
   createPost(dto: CreatePostDTO): Promise<void> {
-    return Promise.resolve();
+    return new Promise(resolve => {
+      setTimeout(() => resolve(), 1000);
+    });
   }
 
   // private _getPostViewsFromStorage(): IPostView[] {

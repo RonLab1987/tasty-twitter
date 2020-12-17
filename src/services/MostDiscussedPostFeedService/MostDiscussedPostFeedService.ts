@@ -7,6 +7,7 @@ import {
 import { Observable } from "rxjs";
 import { IMostDiscussedPostView, IPostView } from "@/domain";
 import { map } from "rxjs/operators";
+import { MAX_CONTENT_LENGTH } from "./constants";
 
 @injectable<IMostDiscussedPostFeedService>()
 export class MostDiscussedPostFeedService
@@ -26,9 +27,9 @@ export class MostDiscussedPostFeedService
           .map<IMostDiscussedPostView>(view => ({
             id: view.id,
             content:
-              view.content.length < 80
+              view.content.length < MAX_CONTENT_LENGTH
                 ? view.content
-                : view.content.slice(0, 80) + "...",
+                : view.content.slice(0, MAX_CONTENT_LENGTH).trim() + "...",
             commentsCount: view.comments.length
           }))
       )
