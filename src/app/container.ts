@@ -1,9 +1,32 @@
-import { PostsRepositoryLocal } from "@/repositories/PostsRepository";
+import { container, instanceCachingFactory } from "tsyringe";
 
-export const postsRepository = new PostsRepositoryLocal(
-  {
-    avatar: "http://random.cat/view/635",
-    fullname: "Random Cat"
-  },
-  window.localStorage
-);
+import {
+  PostsRepositoryLocal,
+  IPostsRepositoryToken
+} from "@/repositories/PostsRepository";
+import {
+  PostFeedService,
+  IPostFeedServiceToken
+} from "@/services/PostFeedService";
+import {
+  MostDiscussedPostFeedService,
+  IMostDiscussedPostFeedServiceToken
+} from "@/services/MostDiscussedPostFeedService";
+
+container.register(IPostsRepositoryToken, {
+  useFactory: instanceCachingFactory(() => {
+    return new PostsRepositoryLocal(window.localStorage);
+  })
+});
+
+container.register(IPostFeedServiceToken, {
+  useFactory: instanceCachingFactory(container => {
+    return container.resolve(PostFeedService);
+  })
+});
+
+container.register(IMostDiscussedPostFeedServiceToken, {
+  useFactory: instanceCachingFactory(container => {
+    return container.resolve(MostDiscussedPostFeedService);
+  })
+});

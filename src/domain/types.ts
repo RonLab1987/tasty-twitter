@@ -1,4 +1,4 @@
-export interface Author {
+export interface IAuthor {
   avatar: string;
   fullname: string;
 }
@@ -6,23 +6,23 @@ export interface Author {
 export type Id = string;
 export type ISODate = string;
 
-export interface CommentView {
+export interface ICommentView {
   id: Id;
   createDate: ISODate;
-  author: Author;
+  author: IAuthor;
   content: string;
 }
 
-export interface PostView {
+export interface IPostView {
   id: Id;
   createDate: ISODate;
-  author: Author;
+  author: IAuthor;
   image: string | null;
   content: string;
-  lastComments: CommentView[];
+  comments: ICommentView[];
 }
 
-export interface MostDiscussedPostView {
+export interface IMostDiscussedPostView {
   id: Id;
   content: string;
   commentsCount: number;

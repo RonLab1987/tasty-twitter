@@ -10,16 +10,16 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { PostView } from "@/domain";
-import { PostView as PostViewComponent } from "../PostView";
+import { IPostView } from "@/domain";
+import { PostView } from "../PostView";
 
 export default Vue.extend({
   name: "PostViewsList",
   props: {
-    postViews: Array as () => PostView[]
+    postViews: Array as () => IPostView[]
   },
   components: {
-    PostView: PostViewComponent
+    PostView
   }
 });
 </script>
