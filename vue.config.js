@@ -13,7 +13,7 @@ module.exports = {
       filename: "index.html"
     }
   },
-  transpileDependencies: ['vuetify'],
+  transpileDependencies: ['vuetify', 'luxon'],
   configureWebpack: {
     plugins: [new VuetifyLoaderPlugin()]
   }
