@@ -1,50 +1,105 @@
-import { CreatePostDTO, IPostsRepository } from "./types";
-import { Observable, ReplaySubject } from "rxjs";
-import { v4 as uuid } from "uuid";
-import { IMostDiscussedPostView, IPostView } from "@/domain";
-import { generatePost } from "./utils";
+import {
+  CreatePostDTO,
+  ICommentModel,
+  IPostModel,
+  IPostsRepository
+} from "./types";
+import { BehaviorSubject, combineLatest, Observable } from "rxjs";
+import { ICommentView, Id, IPostView } from "@/domain";
+import { generateComment, mapToPost } from "./utils";
 import { injectable } from "tsyringe";
-
-const mockPostViews: IPostView[] = new Array(10).fill(null).map(generatePost);
-
-const mockMostDiscussedPosts: IMostDiscussedPostView[] = [
-  {
-    id: uuid(),
-    content: "Some most discussed message",
-    commentsCount: 565
-  }
-];
+import { map, shareReplay, skip } from "rxjs/operators";
+import { COMMENTS_LIST_KEY, POSTS_LIST_KEY } from "./constants";
+import { random } from "faker";
 
 @injectable<IPostsRepository>()
 export class PostsRepositoryLocal implements IPostsRepository {
-  private _postViews$ = new ReplaySubject<IPostView[]>(1);
-  private _mostDiscussedPosts$ = new ReplaySubject<IMostDiscussedPostView[]>(1);
+  private _postViews$: Observable<IPostView[]> | undefined = undefined;
+  private _posts$: BehaviorSubject<IPostModel[]>;
+  private _comments$: BehaviorSubject<ICommentModel[]>;
+
+  private _scheduledGenerators = new Map<Id, number>();
 
   constructor(private _storage: Storage) {
-    console.log(mockPostViews);
-    this._postViews$.next(mockPostViews);
-    this._mostDiscussedPosts$.next(mockMostDiscussedPosts);
+    this._posts$ = new BehaviorSubject<IPostModel[]>(this._getPosts());
+    this._comments$ = new BehaviorSubject<ICommentModel[]>(this._getComments());
+
+    // init comment generator
+    this._posts$.subscribe(posts => {
+      posts.forEach(({ id }) => this._initCommentGenerator(id));
+    });
+
+    // save changes
+    this._posts$.pipe(skip(1)).subscribe(posts => this._savePosts(posts));
+    this._comments$
+      .pipe(skip(1))
+      .subscribe(comments => this._saveComments(comments));
   }
 
   get postViews$(): Observable<IPostView[]> {
+    if (this._postViews$) {
+      return this._postViews$;
+    }
+    this._postViews$ = combineLatest(this._posts$, this._comments$).pipe(
+      map<[IPostModel[], ICommentModel[]], IPostView[]>(([posts, comments]) => {
+        return posts.map<IPostView>(postModel => ({
+          ...postModel,
+          comments: comments
+            .filter(({ postId }) => postId === postModel.id)
+            .map<ICommentView>(({ postId, ...commentView }) => commentView)
+        }));
+      }),
+      shareReplay(1)
+    );
     return this._postViews$;
-  }
-
-  get mostDiscussedPosts$(): Observable<IMostDiscussedPostView[]> {
-    return this._mostDiscussedPosts$;
   }
 
   createPost(dto: CreatePostDTO): Promise<void> {
     return new Promise(resolve => {
-      setTimeout(() => resolve(), 1000);
+      this._posts$.next([mapToPost(dto), ...this._posts$.getValue()]);
+      resolve();
     });
   }
 
-  // private _getPostViewsFromStorage(): IPostView[] {
-  //   const content = this._storage.getItem(StorageKeys.PostViews);
-  //   if (!content) {
-  //     return [];
-  //   }
-  //   return (JSON.stringify(content) as unknown) as IPostView[];
-  // }
+  private _getPosts(): IPostModel[] {
+    const content = this._storage.getItem(POSTS_LIST_KEY);
+    if (!content) {
+      return [];
+    }
+    return (JSON.parse(content) as unknown) as IPostModel[];
+  }
+
+  private _savePosts(posts: IPostModel[]) {
+    this._storage.setItem(POSTS_LIST_KEY, JSON.stringify(posts));
+  }
+
+  private _getComments(): ICommentModel[] {
+    const content = this._storage.getItem(COMMENTS_LIST_KEY);
+    if (!content) {
+      return [];
+    }
+    return (JSON.parse(content) as unknown) as ICommentModel[];
+  }
+
+  private _saveComments(comments: ICommentModel[]) {
+    this._storage.setItem(COMMENTS_LIST_KEY, JSON.stringify(comments));
+  }
+
+  private _initCommentGenerator(postId: Id) {
+    if (this._scheduledGenerators.has(postId)) {
+      return;
+    }
+    this._scheduleCommentGenerator(postId);
+  }
+
+  private _scheduleCommentGenerator(postId: Id) {
+    const timeoutId = setTimeout(() => {
+      this._comments$.next([
+        generateComment(postId),
+        ...this._comments$.getValue()
+      ]);
+      this._scheduleCommentGenerator(postId);
+    }, random.number({ min: 5000, max: 30000, precision: 5000 }));
+    this._scheduledGenerators.set(postId, timeoutId);
+  }
 }

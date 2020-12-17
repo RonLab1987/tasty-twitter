@@ -6,13 +6,11 @@
     :disabled="submitInProgress"
   >
     <div class="create-post-form--input-area">
-      <v-textarea
+      <v-text-field
         v-model="model.content"
-        required
-        rows="1"
-        auto-grow
+        :rules="rules.content"
+        placeholder="Что происходит?"
         outlined
-        row-height="10"
       />
     </div>
     <v-btn color="primary" type="submit" x-large :loading="submitInProgress">
@@ -37,6 +35,11 @@ export default Vue.extend({
       submitInProgress: false,
       model: {
         content: ""
+      },
+      rules: {
+        content: [
+          (value: string | undefined) => !!value || "Сообщение обязательно"
+        ]
       }
     };
   },

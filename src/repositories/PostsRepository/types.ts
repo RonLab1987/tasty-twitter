@@ -1,10 +1,21 @@
 import { Observable } from "rxjs";
-import { IPostView } from "@/domain";
+import { IAuthor, Id, IPostView, ISODate } from "@/domain";
 import { InjectionToken } from "tsyringe";
 
-export enum StorageKeys {
-  PostsList = "POST_LIST",
-  CommentsList = "COMMENTS_LIST"
+export interface IPostModel {
+  id: Id;
+  createDate: ISODate;
+  author: IAuthor;
+  image: string | null;
+  content: string;
+}
+
+export interface ICommentModel {
+  id: Id;
+  postId: Id;
+  createDate: ISODate;
+  author: IAuthor;
+  content: string;
 }
 
 export interface CreatePostDTO {
