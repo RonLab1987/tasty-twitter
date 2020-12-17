@@ -3,7 +3,6 @@
     <v-img
       class="post-view-card--image"
       :src="postView.image"
-      :aspect-ratio="16 / 9"
       v-if="postView.image"
     />
     <v-card-text class="post-view-card--post-container">
@@ -12,7 +11,7 @@
       </div>
       <div class="post-view-card--content-container">
         <span class="post-view-card--create-date">
-          {{ postView.createDate }}
+          {{ postView.createDate | toLocalDateTime }}
         </span>
         {{ postView.content }}
       </div>

@@ -6,7 +6,7 @@
       </div>
       <div class="post-view-comment--content-container">
         <span class="post-view-comment--create-date">
-          {{ commentView.createDate }}
+          {{ commentView.createDate | toLocalDateTime }}
         </span>
         {{ commentView.content }}
       </div>

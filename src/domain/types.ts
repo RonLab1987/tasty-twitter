@@ -8,18 +8,18 @@ export interface IAuthor {
 }
 
 export type Id = string;
-export type ISODate = string;
+export type ISODateTime = string;
 
 export interface ICommentView {
   id: Id;
-  createDate: ISODate;
+  createDate: ISODateTime;
   author: IAuthor;
   content: string;
 }
 
 export interface IPostView {
   id: Id;
-  createDate: ISODate;
+  createDate: ISODateTime;
   author: IAuthor;
   image: string | null;
   content: string;

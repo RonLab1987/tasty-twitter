@@ -6,6 +6,7 @@ import router from "../router";
 import { makeVuetify } from "../vuetify";
 import VueRx from "vue-rx";
 import "./container";
+import "../filters";
 import { IApplicationConfigRepositoryToken } from "@/repositories/ApplicationConfigRepository";
 import { skip, take } from "rxjs/operators";
 
