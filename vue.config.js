@@ -2,6 +2,9 @@ const { VuetifyLoaderPlugin } = require("vuetify-loader");
 
 module.exports = {
   lintOnSave: false,
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/tasty-twitter'
+    : '/',
   pages: {
     main: {
       entry: "src/app/index.ts",
