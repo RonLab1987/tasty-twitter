@@ -5,7 +5,7 @@
         <v-list-item-avatar class="justify-center text--white" color="accent">
           {{ post.commentsCount }}
         </v-list-item-avatar>
-        <v-list-item-content>
+        <v-list-item-content class="text-break">
           {{ post.content }}
         </v-list-item-content>
       </v-list-item>
