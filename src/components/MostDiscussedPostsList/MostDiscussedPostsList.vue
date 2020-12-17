@@ -1,14 +1,19 @@
 <template>
-  <v-list two-line>
-    <v-list-item v-for="post in list" :key="post.id">
-      <v-list-item-avatar class="justify-center text--white" color="accent">
-        {{ post.commentsCount }}
-      </v-list-item-avatar>
-      <v-list-item-content>
-        {{ post.content }}
-      </v-list-item-content>
-    </v-list-item>
-  </v-list>
+  <div class="most-discussed-posts-list">
+    <v-list two-line v-if="list.length">
+      <v-list-item v-for="post in list" :key="post.id">
+        <v-list-item-avatar class="justify-center text--white" color="accent">
+          {{ post.commentsCount }}
+        </v-list-item-avatar>
+        <v-list-item-content>
+          {{ post.content }}
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
+    <v-alert outlined type="info" v-else>
+      Пока нет обсуждений
+    </v-alert>
+  </div>
 </template>
 
 <script lang="ts">

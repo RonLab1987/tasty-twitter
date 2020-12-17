@@ -1,10 +1,15 @@
 <template>
   <div class="post-views-list">
-    <post-view
-      v-for="postView of postViews"
-      :post-view="postView"
-      :key="postView.id"
-    />
+    <template v-if="postViews.length">
+      <post-view
+        v-for="postView of postViews"
+        :post-view="postView"
+        :key="postView.id"
+      />
+    </template>
+    <v-alert outlined type="info" v-else>
+      Опубликуйте ваш первый пост
+    </v-alert>
   </div>
 </template>
 
