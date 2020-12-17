@@ -18,12 +18,19 @@ export const generateComment = (postId: Id): ICommentModel => ({
 });
 
 export const mapToPost = (dto: CreatePostDTO): IPostModel => {
-  const content = dto.content;
+  const checkPreview = /http?s?:?\/\/[^"']*\.(gif|jpe?g|tiff?|png|webp|bmp|svg)/.exec(
+    dto.content
+  );
+  const image = checkPreview === null ? null : checkPreview[0];
+  const content =
+    checkPreview === null
+      ? dto.content
+      : dto.content.replace(checkPreview[0], "");
   return {
     id: uuid(),
     createDate: new Date().toISOString(),
     author: DEFAULT_AUTHOR,
-    image: null,
+    image,
     content
   };
 };
