@@ -38,7 +38,8 @@ export default Vue.extend({
       },
       rules: {
         content: [
-          (value: string | undefined) => !!value || "Сообщение обязательно"
+          (value: string | undefined) =>
+            (value && !!value.trim()) || "Сообщение обязательно"
         ]
       }
     };

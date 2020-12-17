@@ -24,8 +24,8 @@ export const mapToPost = (dto: CreatePostDTO): IPostModel => {
   const image = checkPreview === null ? null : checkPreview[0];
   const content =
     checkPreview === null
-      ? dto.content
-      : dto.content.replace(checkPreview[0], "");
+      ? dto.content.trim()
+      : dto.content.replace(checkPreview[0], "").trim();
   return {
     id: uuid(),
     createDate: new Date().toISOString(),
