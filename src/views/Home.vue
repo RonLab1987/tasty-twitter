@@ -5,9 +5,7 @@
         <PostViewsList :post-views="postViews" />
       </v-col>
       <v-col :cols="5">
-        <div v-for="view of mostDiscussedPostViews" :key="view.id">
-          {{ view }}
-        </div>
+        <most-discussed-posts-list :list="mostDiscussedPostViews" />
       </v-col>
     </v-row>
   </v-container>
@@ -16,9 +14,11 @@
 <script lang="ts">
 import Vue from "vue";
 import { container } from "tsyringe";
-import { PostViewsList } from "@/components/PostViewsList";
 import { IPostFeedServiceToken } from "@/services/PostFeedService";
 import { IMostDiscussedPostFeedServiceToken } from "@/services/MostDiscussedPostFeedService";
+
+import { PostViewsList } from "@/components/PostViewsList";
+import { MostDiscussedPostsList } from "@/components/MostDiscussedPostsList";
 
 export default Vue.extend({
   name: "Home",
@@ -34,7 +34,8 @@ export default Vue.extend({
     };
   },
   components: {
-    PostViewsList
+    PostViewsList,
+    MostDiscussedPostsList
   }
 });
 </script>

@@ -20,14 +20,17 @@ export class MostDiscussedPostFeedService
     return this._postRepository.postViews$.pipe(
       map<IPostView[], IMostDiscussedPostView[]>(postViews =>
         postViews
+          .filter(({ comments }) => comments.length > 0)
+          .sort((a, b) => b.comments.length - a.comments.length)
+          .splice(0, 3)
           .map<IMostDiscussedPostView>(view => ({
             id: view.id,
-            content: view.content,
+            content:
+              view.content.length < 80
+                ? view.content
+                : view.content.slice(0, 80) + "...",
             commentsCount: view.comments.length
           }))
-          .filter(({ commentsCount }) => commentsCount > 0)
-          .sort((a, b) => b.commentsCount - a.commentsCount)
-          .splice(0, 3)
       )
     );
   }

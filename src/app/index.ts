@@ -10,7 +10,7 @@ Vue.use(VueRx);
 Vue.config.productionTip = false;
 
 new Vue({
-  vuetify: makeVuetify(false),
+  vuetify: makeVuetify(true),
   router,
   render: h => h(App)
 }).$mount("#app");
