@@ -3,26 +3,27 @@ export interface Author {
   fullname: string;
 }
 
-export type CommentContent = string;
+export type Id = string;
+export type ISODate = string;
+
 export interface CommentView {
+  id: Id;
+  createDate: ISODate;
   author: Author;
-  content: CommentContent;
+  content: string;
 }
 
-export type PostId = string;
-export type PostImage = string;
-export type PostContent = string;
 export interface PostView {
-  id: PostId;
+  id: Id;
+  createDate: ISODate;
   author: Author;
-  image: PostImage | null;
-  content: PostContent;
+  image: string | null;
+  content: string;
   lastComments: CommentView[];
 }
 
-export type MostDiscussedPostContent = string;
-export interface MostDiscussedPost {
-  id: PostId;
-  content: MostDiscussedPostContent;
+export interface MostDiscussedPostView {
+  id: Id;
+  content: string;
   commentsCount: number;
 }

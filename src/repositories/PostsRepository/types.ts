@@ -1,5 +1,5 @@
 import { Observable } from "rxjs";
-import { MostDiscussedPost, PostView } from "@/domain";
+import { MostDiscussedPostView, PostView } from "@/domain";
 
 export enum StorageKeys {
   PostViews = "POST_VIEWS",
@@ -12,6 +12,6 @@ export interface CreatePostDTO {
 
 export interface PostsRepository {
   postViews$: Observable<PostView[]>;
-  mostDiscussedPosts$: Observable<MostDiscussedPost[]>;
+  mostDiscussedPosts$: Observable<MostDiscussedPostView[]>;
   createPost(dto: CreatePostDTO): Promise<any>;
 }

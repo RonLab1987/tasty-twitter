@@ -10,6 +10,7 @@ module.exports = {
       filename: "index.html"
     }
   },
+  transpileDependencies: ['vuetify'],
   configureWebpack: {
     plugins: [new VuetifyLoaderPlugin()]
   }

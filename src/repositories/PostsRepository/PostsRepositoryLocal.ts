@@ -1,6 +1,6 @@
 import { CreatePostDTO, PostsRepository, StorageKeys } from "./types";
 import { Observable, ReplaySubject } from "rxjs";
-import { Author, MostDiscussedPost, PostView } from "@/domain";
+import { Author, MostDiscussedPostView, PostView } from "@/domain";
 import { v4 as uuid } from "uuid";
 
 const mockAuthor: Author = {
@@ -10,6 +10,7 @@ const mockAuthor: Author = {
 const mockPostViews: PostView[] = [
   {
     id: uuid(),
+    createDate: new Date().toISOString(),
     author: mockAuthor,
     image: null,
     content: "Random Cat make random post",
@@ -17,6 +18,7 @@ const mockPostViews: PostView[] = [
   },
   {
     id: uuid(),
+    createDate: new Date().toISOString(),
     author: mockAuthor,
     image: "https://picsum.photos/200/300",
     content: "Random Cat make another post",
@@ -24,7 +26,7 @@ const mockPostViews: PostView[] = [
   }
 ];
 
-const mockMostDiscussedPosts: MostDiscussedPost[] = [
+const mockMostDiscussedPosts: MostDiscussedPostView[] = [
   {
     id: uuid(),
     content: "Some most discussed message",
@@ -34,7 +36,7 @@ const mockMostDiscussedPosts: MostDiscussedPost[] = [
 
 export class PostsRepositoryLocal implements PostsRepository {
   private _postViews$ = new ReplaySubject<PostView[]>(1);
-  private _mostDiscussedPosts$ = new ReplaySubject<MostDiscussedPost[]>(1);
+  private _mostDiscussedPosts$ = new ReplaySubject<MostDiscussedPostView[]>(1);
 
   constructor(private _user: Author, private _storage: Storage) {
     this._postViews$.next(mockPostViews);
@@ -45,7 +47,7 @@ export class PostsRepositoryLocal implements PostsRepository {
     return this._postViews$;
   }
 
-  get mostDiscussedPosts$(): Observable<MostDiscussedPost[]> {
+  get mostDiscussedPosts$(): Observable<MostDiscussedPostView[]> {
     return this._mostDiscussedPosts$;
   }
 
