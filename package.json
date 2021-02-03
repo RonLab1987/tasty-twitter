@@ -1,60 +1,29 @@
 {
   "name": "tasty-twitter",
-  "version": "0.1.0",
   "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+  "workspaces": {
+    "packages": [
+      "packages/**",
+      "applications/*"
+    ],
+    "nohoist": [
+      "**/jest",
+      "**/ts-jest",
+      "**/typescript"
+    ]
   },
-  "dependencies": {
-    "core-js": "^3.6.5",
-    "faker": "^5.1.0",
-    "luxon": "^1.25.0",
-    "reflect-metadata": "^0.1.13",
-    "rxjs": "^6.6.3",
-    "tsyringe": "^4.4.0",
-    "uuid": "^8.3.2",
-    "vue": "^2.6.11",
-    "vue-router": "^3.2.0",
-    "vue-rx": "^6.2.0",
-    "vuetify": "^2.3.21"
+  "author": {
+    "name": "Roman Laptev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RonLab1987/tasty-twitter"
+  },
+  "scripts": {
+    "lerna": "lerna",
+    "bootstrap": "lerna bootstrap"
   },
   "devDependencies": {
-    "@mdi/js": "^5.8.55",
-    "@types/faker": "^5.1.5",
-    "@types/luxon": "^1.25.0",
-    "@types/uuid": "^8.3.0",
-    "@typescript-eslint/eslint-plugin": "^2.33.0",
-    "@typescript-eslint/parser": "^2.33.0",
-    "@vue/cli-plugin-babel": "~4.5.0",
-    "@vue/cli-plugin-eslint": "~4.5.0",
-    "@vue/cli-plugin-router": "~4.5.0",
-    "@vue/cli-plugin-typescript": "~4.5.0",
-    "@vue/cli-service": "~4.5.0",
-    "@vue/eslint-config-prettier": "^6.0.0",
-    "@vue/eslint-config-typescript": "^5.0.2",
-    "deepmerge": "^4.2.2",
-    "eslint": "^6.7.2",
-    "eslint-plugin-prettier": "^3.1.3",
-    "eslint-plugin-vue": "^6.2.2",
-    "fibers": "^5.0.0",
-    "lint-staged": "^9.5.0",
-    "node-sass": "^4.12.0",
-    "prettier": "^1.19.1",
-    "sass": "^1.30.0",
-    "sass-loader": "^10.1.0",
-    "typescript": "~3.9.3",
-    "vue-template-compiler": "^2.6.11",
-    "vuetify-loader": "^1.6.0"
-  },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,jsx,vue,ts,tsx}": [
-      "vue-cli-service lint",
-      "git add"
-    ]
+    "lerna": "^3.19.0"
   }
 }
