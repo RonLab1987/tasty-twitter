@@ -1,20 +1,15 @@
-import "reflect-metadata";
-import { container } from "tsyringe";
+import { container } from '@/di'
+import { IApplicationConfigRepositoryToken } from "@ronlab/tasty-twitter-core";
 import Vue from "vue";
 import App from "./App.vue";
 import router from "../router";
 import { makeVuetify } from "../vuetify";
 import VueRx from "vue-rx";
-import "./container";
 import "../filters";
-import { IApplicationConfigRepositoryToken } from "@/repositories/ApplicationConfigRepository";
 import { skip, take } from "rxjs/operators";
-import { hello } from "@ronlab/tasty-twitter-api";
 
 Vue.use(VueRx);
 Vue.config.productionTip = false;
-
-hello('MONOREPO')
 
 const applicationConfigRepository = container.resolve(
   IApplicationConfigRepositoryToken

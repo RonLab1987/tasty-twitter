@@ -18,8 +18,8 @@
 <script lang="ts">
 import Vue from "vue";
 import { mdiThemeLightDark } from "@mdi/js";
-import { container } from "tsyringe";
-import { IApplicationConfigRepositoryToken } from "@/repositories/ApplicationConfigRepository";
+import { container } from '@/di'
+import { IApplicationConfigRepositoryToken } from "@ronlab/tasty-twitter-core";
 import { take } from "rxjs/operators";
 
 export default Vue.extend({

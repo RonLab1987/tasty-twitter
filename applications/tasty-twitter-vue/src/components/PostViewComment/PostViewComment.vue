@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { ICommentView } from "@/domain";
+import { ICommentView } from "@ronlab/tasty-twitter-core";
 import { AuthorAvatar } from "../AuthorAvatar";
 
 export default Vue.extend({

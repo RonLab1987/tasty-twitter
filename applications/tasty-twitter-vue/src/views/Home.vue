@@ -13,9 +13,11 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { container } from "tsyringe";
-import { IPostFeedServiceToken } from "@/services/PostFeedService";
-import { IMostDiscussedPostFeedServiceToken } from "@/services/MostDiscussedPostFeedService";
+import { container } from '@/di'
+import {
+  IPostFeedServiceToken,
+  IMostDiscussedPostFeedServiceToken
+} from "@ronlab/tasty-twitter-core";
 
 import { PostViewsList } from "@/components/PostViewsList";
 import { MostDiscussedPostsList } from "@/components/MostDiscussedPostsList";

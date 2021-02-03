@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { IPostView } from "@/domain";
+import { IPostView } from "@ronlab/tasty-twitter-core";
 import { PostViewCard } from "../PostViewCard";
 import { PostViewComment } from "../PostViewComment";
 

@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { IAuthor } from "../../domain";
+import { IAuthor } from "@ronlab/tasty-twitter-core";
 
 export default Vue.extend({
   name: "AuthorAvatar",

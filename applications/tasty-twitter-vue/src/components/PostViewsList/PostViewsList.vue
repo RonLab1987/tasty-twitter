@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { IPostView } from "@/domain";
+import { IPostView } from "@ronlab/tasty-twitter-core";
 import { PostView } from "../PostView";
 
 export default Vue.extend({

@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { IMostDiscussedPostView } from "@/domain";
+import { IMostDiscussedPostView } from "@ronlab/tasty-twitter-core";
 
 export default Vue.extend({
   name: "MostDiscussedPostsList",

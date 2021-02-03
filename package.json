@@ -9,6 +9,7 @@
     "nohoist": [
       "**/jest",
       "**/ts-jest",
+      "typescript",
       "**/typescript"
     ]
   },
